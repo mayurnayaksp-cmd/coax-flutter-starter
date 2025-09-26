@@ -5,71 +5,126 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        // Top expandable cover
-        SliverAppBar(
-          expandedHeight: 200,
-          pinned: true,
-          flexibleSpace: FlexibleSpaceBar(
-            title: const Text("Profile"),
-            background: Image.network(
-              "https://picsum.photos/600/400?blur=2",
-              fit: BoxFit.cover,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("My Profile"),
+        centerTitle: true,
+        backgroundColor: Colors.redAccent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {},
           ),
-        ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 20),
 
-        // User info section
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const SizedBox(height: 16),
-              const CircleAvatar(
-                radius: 50,
-                backgroundImage: NetworkImage("https://picsum.photos/200"),
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                "Coax User",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const Text("@coax_user"),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+            // Profile picture + stats
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.orangeAccent,
+                  backgroundImage: NetworkImage(
+                    "https://picsum.photos/200", // dummy profile pic
                   ),
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 32, vertical: 12),
                 ),
-                child: const Text("Edit Profile",
-                    style: TextStyle(color: Colors.white)),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
-
-        // Posts grid
-        SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 6,
-            mainAxisSpacing: 6,
-          ),
-          delegate: SliverChildBuilderDelegate(
-            (context, index) => Image.network(
-              "https://picsum.photos/300?random=$index",
-              fit: BoxFit.cover,
+                Column(
+                  children: const [
+                    Text("120",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
+                    Text("Posts"),
+                  ],
+                ),
+                Column(
+                  children: const [
+                    Text("2.5K",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
+                    Text("Followers"),
+                  ],
+                ),
+                Column(
+                  children: const [
+                    Text("340",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20)),
+                    Text("Following"),
+                  ],
+                ),
+              ],
             ),
-            childCount: 21,
-          ),
+
+            const SizedBox(height: 15),
+
+            // Username + bio
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("CX_User",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 18)),
+                    SizedBox(height: 5),
+                    Text("🔥 Welcome to Coax! Made in India 🇮🇳"),
+                  ],
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // Buttons (Edit Profile / Share)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton(
+                  onPressed: () {},
+                  child: const Text("Edit Profile"),
+                ),
+                OutlinedButton(
+                  onPressed: () {},
+                  child: const Text("Share Profile"),
+                ),
+              ],
+            ),
+
+            const Divider(height: 30),
+
+            // Grid of posts
+            GridView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(8),
+              itemCount: 12, // dummy posts
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 4,
+                crossAxisSpacing: 4,
+              ),
+              itemBuilder: (context, index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage("https://picsum.photos/id/$index/200"),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
