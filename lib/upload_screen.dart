@@ -1,120 +1,102 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class UploadScreen extends StatefulWidget {
+  const UploadScreen({super.key});
+
   @override
-  _UploadScreenState createState() => _UploadScreenState();
+  State<UploadScreen> createState() => _UploadScreenState();
 }
 
 class _UploadScreenState extends State<UploadScreen> {
-  File? _mediaFile;
+  String? _imagePath; // placeholder for selected image
   final TextEditingController _captionController = TextEditingController();
-
-  Future<void> _pickMedia(ImageSource source) async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: source); // for now only image
-    if (pickedFile != null) {
-      setState(() {
-        _mediaFile = File(pickedFile.path);
-      });
-    }
-  }
-
-  void _postContent() {
-    if (_mediaFile == null || _captionController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please add an image and caption")),
-      );
-      return;
-    }
-
-    // For now just preview success (later integrate with backend)
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Posted successfully!")),
-    );
-
-    setState(() {
-      _mediaFile = null;
-      _captionController.clear();
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Post"),
+        title: const Text("Create Post"),
         centerTitle: true,
         backgroundColor: Colors.redAccent,
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Upload preview
+            // Image upload area
             GestureDetector(
-              onTap: () => _pickMedia(ImageSource.gallery),
+              onTap: () {
+                // later: integrate image picker
+                setState(() {
+                  _imagePath =
+                      "https://picsum.photos/400/300"; // dummy image for now
+                });
+              },
               child: Container(
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.grey),
+                  color: Colors.orange.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.redAccent, width: 2),
                 ),
-                child: _mediaFile == null
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.add_a_photo, size: 50, color: Colors.grey),
-                            SizedBox(height: 10),
-                            Text("Tap to select image"),
-                          ],
+                child: _imagePath == null
+                    ? const Center(
+                        child: Text(
+                          "Tap to select image/video",
+                          style: TextStyle(color: Colors.black54),
                         ),
                       )
                     : ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: Image.file(_mediaFile!, fit: BoxFit.cover),
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(_imagePath!, fit: BoxFit.cover),
                       ),
               ),
             ),
-            SizedBox(height: 20),
 
-            // Caption input
+            const SizedBox(height: 20),
+
+            // Caption text field
             TextField(
               controller: _captionController,
-              maxLines: 3,
               decoration: InputDecoration(
                 hintText: "Write a caption...",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
+                filled: true,
+                fillColor: Colors.orange.shade50,
               ),
+              maxLines: 3,
             ),
-            SizedBox(height: 20),
 
-            // Post button
-            ElevatedButton.icon(
-              onPressed: _postContent,
-              icon: Icon(Icons.send),
-              label: Text("Post"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+            const SizedBox(height: 20),
+
+            // Upload button
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Post uploaded (dummy)!")),
+                  );
+                },
+                icon: const Icon(Icons.cloud_upload),
+                label: const Text(
+                  "Upload",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.redAccent,
-        onPressed: () => _pickMedia(ImageSource.camera),
-        child: Icon(Icons.camera_alt),
       ),
     );
   }
