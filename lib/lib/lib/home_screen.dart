@@ -14,7 +14,7 @@ class _HomeScreenState extends State<HomeScreen> {
     FeedPage(),
     SearchPage(),,
     Center(child: Text("Upload Page", style: TextStyle(fontSize: 24))),
-    Center(child: Text("Notifications Page", style: TextStyle(fontSize: 24))),
+    NotificationsPage(),
     ProfilePage(),
   ];
 
