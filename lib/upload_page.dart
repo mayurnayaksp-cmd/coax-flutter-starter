@@ -1,108 +1,71 @@
 import 'package:flutter/material.dart';
 import 'post_model.dart';
-import 'upload_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class UploadScreen extends StatefulWidget {
+  const UploadScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<UploadScreen> createState() => _UploadScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  List<Post> posts = [
-    Post(
-      id: '1',
-      userName: 'Rahul Sharma',
-      userAvatar: 'https://i.pravatar.cc/150?img=1',
-      content: 'Hello Coax fam! Excited to be here 🚀',
-      imageUrl: 'https://picsum.photos/400/300',
-      timestamp: DateTime.now(),
-    ),
-    Post(
-      id: '2',
-      userName: 'Aditi Verma',
-      userAvatar: 'https://i.pravatar.cc/150?img=2',
-      content: 'Such a beautiful day 🌸',
-      timestamp: DateTime.now().subtract(const Duration(hours: 2)),
-    ),
-  ];
+class _UploadScreenState extends State<UploadScreen> {
+  final TextEditingController contentController = TextEditingController();
+  final TextEditingController imageController = TextEditingController();
 
-  void _addPost(Post newPost) {
-    setState(() {
-      posts.insert(0, newPost); // new posts appear on top
-    });
+  void _submitPost() {
+    if (contentController.text.trim().isEmpty) return;
+
+    final newPost = Post(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      userName: "You",
+      userAvatar: "https://i.pravatar.cc/150?img=5",
+      content: contentController.text.trim(),
+      imageUrl: imageController.text.trim().isNotEmpty
+          ? imageController.text.trim()
+          : null,
+      timestamp: DateTime.now(),
+    );
+
+    Navigator.pop(context, newPost); // send back to home
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Coax Feed"),
-        centerTitle: true,
+        title: const Text("Create Post"),
         backgroundColor: Colors.redAccent,
       ),
-      body: ListView.builder(
-        itemCount: posts.length,
-        itemBuilder: (context, index) {
-          final post = posts[index];
-          return Card(
-            margin: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(post.userAvatar),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        post.userName,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        "${post.timestamp.hour}:${post.timestamp.minute.toString().padLeft(2, '0')}",
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  Text(post.content),
-                  if (post.imageUrl != null) ...[
-                    const SizedBox(height: 10),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(post.imageUrl!),
-                    ),
-                  ]
-                ],
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            TextField(
+              controller: contentController,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                hintText: "What's on your mind?",
+                border: OutlineInputBorder(),
               ),
             ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.redAccent,
-        child: const Icon(Icons.add),
-        onPressed: () async {
-          final newPost = await Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const UploadScreen()),
-          );
-          if (newPost != null && newPost is Post) {
-            _addPost(newPost);
-          }
-        },
+            const SizedBox(height: 15),
+            TextField(
+              controller: imageController,
+              decoration: const InputDecoration(
+                hintText: "Image URL (optional)",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitPost,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent,
+              ),
+              child: const Text("Post"),
+            ),
+          ],
+        ),
       ),
     );
   }
