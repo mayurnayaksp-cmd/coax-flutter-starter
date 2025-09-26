@@ -1,94 +1,58 @@
 import 'package:flutter/material.dart';
-import '../main.dart'; // For MainNavigation
-import 'signup_screen.dart'; // For navigation to signup
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  void _login() {
-    // For now: just go to MainNavigation
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const MainNavigation()),
-    );
-  }
+class LoginScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ShaderMask(
-                shaderCallback: (bounds) => const LinearGradient(
-                  colors: [Colors.redAccent, Colors.orangeAccent],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ).createShader(bounds),
-                child: const Text(
-                  "Welcome Back",
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Coax",
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white, // masked by gradient
+                    color: Colors.redAccent,
                   ),
                 ),
-              ),
-              const SizedBox(height: 30),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: "Email",
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 40),
+                TextField(
+                  controller: emailController,
+                  decoration: InputDecoration(labelText: "Email"),
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: "Password",
-                  border: OutlineInputBorder(),
+                const SizedBox(height: 20),
+                TextField(
+                  controller: passwordController,
+                  decoration: InputDecoration(labelText: "Password"),
+                  obscureText: true,
                 ),
-                obscureText: true,
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: _login,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 50),
+                const SizedBox(height: 30),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/home');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  ),
+                  child: Text("Login"),
                 ),
-                child: const Text(
-                  "Login",
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignupScreen()),
-                  );
-                },
-                child: const Text(
-                  "Don’t have an account? Sign Up",
-                  style: TextStyle(color: Colors.orangeAccent),
-                ),
-              ),
-            ],
+                const SizedBox(height: 20),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/signup');
+                  },
+                  child: Text("Don't have an account? Sign up"),
+                )
+              ],
+            ),
           ),
         ),
       ),
