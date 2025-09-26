@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -32,12 +33,21 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // TODO: handle login logic
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Login button pressed")),
+                  const SnackBar(content: Text("Login pressed!")),
                 );
+                // TODO: Go to Home screen
               },
               child: const Text("Login"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignupScreen()),
+                );
+              },
+              child: const Text("Don’t have an account? Sign up"),
             ),
           ],
         ),
