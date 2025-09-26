@@ -12,7 +12,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _pages = const [
     FeedPage(),,
-    Center(child: Text("Search Page", style: TextStyle(fontSize: 24))),
+    ProfilePage(),,
     Center(child: Text("Upload Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Notifications Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Profile Page", style: TextStyle(fontSize: 24))),
