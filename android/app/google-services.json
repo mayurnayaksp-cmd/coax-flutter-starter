@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1078894073709",
+    "project_id": "coax-social",
+    "storage_bucket": "coax-social.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078894073709:android:e40f342dd5212b1cbcec64",
+        "android_client_info": {
+          "package_name": "com.coax.social"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt3FJK9rCaoFYbjr1yWQmzeWTb5Ac63AI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
