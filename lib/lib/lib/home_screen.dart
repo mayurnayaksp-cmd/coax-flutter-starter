@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'feed_page.dart';
+import 'search_page.dart';
+import 'notifications_page.dart';
+import 'profile_page.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
