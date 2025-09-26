@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import 'login_screen.dart';
+
+// Import all your screens
+import 'feed_page.dart';
 import 'home_screen.dart';
+import 'notifications_screen.dart';
+import 'profile_screen.dart';
+import 'search_screen.dart';
+import 'splash_screen.dart';
+import 'login_screen.dart';
+import 'signup_screen.dart';
+import 'upload_screen.dart';
 
 void main() {
-  runApp(const CoaxApp());
+  runApp(const MyApp());
 }
 
-class CoaxApp extends StatelessWidget {
-  const CoaxApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,23 +24,19 @@ class CoaxApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Coax',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.white,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        primarySwatch: Colors.red,
       ),
-      initialRoute: '/login',
+      // App starts with splash screen
+      home: const SplashScreen(),
       routes: {
         '/login': (context) => const LoginScreen(),
+        '/signup': (context) => const SignupScreen(),
         '/home': (context) => const HomeScreen(),
+        '/feed': (context) => const FeedPage(),
+        '/search': (context) => const SearchScreen(),
+        '/notifications': (context) => const NotificationsScreen(),
+        '/profile': (context) => const ProfileScreen(),
+        '/upload': (context) => const UploadScreen(),
       },
     );
   }
