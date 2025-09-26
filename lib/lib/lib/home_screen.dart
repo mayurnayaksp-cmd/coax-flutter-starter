@@ -11,11 +11,11 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = const [
-    FeedPage(),,
-    ProfilePage(),,
+    FeedPage(),
+    SearchPage(),,
     Center(child: Text("Upload Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Notifications Page", style: TextStyle(fontSize: 24))),
-    Center(child: Text("Profile Page", style: TextStyle(fontSize: 24))),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
