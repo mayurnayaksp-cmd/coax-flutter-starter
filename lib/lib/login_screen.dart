@@ -1,3 +1,4 @@
+import 'home_screen.dart';
 import 'package:flutter/material.dart';
 import 'signup_screen.dart';
 
@@ -33,11 +34,11 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Login pressed!")),
+               Navigator.pushReplacement(
+                context,
+                 MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
-                // TODO: Go to Home screen
-              },
+               },
               child: const Text("Login"),
             ),
             TextButton(
