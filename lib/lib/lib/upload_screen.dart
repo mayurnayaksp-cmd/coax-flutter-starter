@@ -1,86 +1,32 @@
 import 'package:flutter/material.dart';
 
-class UploadScreen extends StatefulWidget {
+class UploadScreen extends StatelessWidget {
   const UploadScreen({super.key});
 
   @override
-  State<UploadScreen> createState() => _UploadScreenState();
-}
-
-class _UploadScreenState extends State<UploadScreen> {
-  String? _selectedFile;
-  final TextEditingController _captionController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Upload"),
-        backgroundColor: Colors.redAccent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Preview box
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey),
-                borderRadius: BorderRadius.circular(12),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.cloud_upload, size: 100, color: Colors.red),
+          const SizedBox(height: 20),
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
               ),
-              child: _selectedFile == null
-                  ? const Center(child: Text("No file selected"))
-                  : Center(child: Text("File selected: $_selectedFile")),
             ),
-            const SizedBox(height: 16),
-
-            // Caption field
-            TextField(
-              controller: _captionController,
-              decoration: const InputDecoration(
-                labelText: "Write a caption...",
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 2,
+            onPressed: () {},
+            icon: const Icon(Icons.add_a_photo, color: Colors.white),
+            label: const Text(
+              "Upload Post",
+              style: TextStyle(color: Colors.white, fontSize: 18),
             ),
-            const SizedBox(height: 16),
-
-            // Select file button (dummy for now)
-            ElevatedButton.icon(
-              onPressed: () {
-                // Later we'll integrate real image/video picker
-                setState(() {
-                  _selectedFile = "demo_image.png"; // placeholder
-                });
-              },
-              icon: const Icon(Icons.upload_file),
-              label: const Text("Choose Image/Video"),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Post button
-            ElevatedButton(
-              onPressed: () {
-                if (_captionController.text.isEmpty || _selectedFile == null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Add file and caption!")),
-                  );
-                  return;
-                }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Post uploaded (UI only)!")),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.redAccent,
-              ),
-              child: const Text("Post"),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
