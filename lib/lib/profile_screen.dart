@@ -5,49 +5,71 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("My Profile"),
-        centerTitle: true,
-        backgroundColor: Colors.red,
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 20),
-          const CircleAvatar(
-            radius: 50,
-            backgroundImage: NetworkImage(
-              "https://via.placeholder.com/150", // replace with real profile pic later
+    return CustomScrollView(
+      slivers: [
+        // Top expandable cover
+        SliverAppBar(
+          expandedHeight: 200,
+          pinned: true,
+          flexibleSpace: FlexibleSpaceBar(
+            title: const Text("Profile"),
+            background: Image.network(
+              "https://picsum.photos/600/400?blur=2",
+              fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(height: 10),
-          const Text(
-            "Username",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        ),
+
+        // User info section
+        SliverToBoxAdapter(
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              const CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage("https://picsum.photos/200"),
+              ),
+              const SizedBox(height: 12),
+              const Text(
+                "Coax User",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const Text("@coax_user"),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 32, vertical: 12),
+                ),
+                child: const Text("Edit Profile",
+                    style: TextStyle(color: Colors.white)),
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
-          const SizedBox(height: 5),
-          const Text(
-            "user@email.com",
-            style: TextStyle(color: Colors.grey),
+        ),
+
+        // Posts grid
+        SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 6,
+            mainAxisSpacing: 6,
           ),
-          const SizedBox(height: 20),
-          const Divider(),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text("Settings"),
-            onTap: () {
-              // Navigate to settings later
-            },
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => Image.network(
+              "https://picsum.photos/300?random=$index",
+              fit: BoxFit.cover,
+            ),
+            childCount: 21,
           ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text("Logout"),
-            onTap: () {
-              // Logout logic later
-            },
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
