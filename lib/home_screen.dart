@@ -1,118 +1,83 @@
 import 'package:flutter/material.dart';
+import 'post_model.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final List<Post> posts = [
+    Post(
+      id: '1',
+      userName: 'Rahul Sharma',
+      userAvatar: 'https://i.pravatar.cc/150?img=1',
+      content: 'Hello Coax fam! Excited to be here 🚀',
+      imageUrl: 'https://picsum.photos/400/300',
+      timestamp: DateTime.now(),
+    ),
+    Post(
+      id: '2',
+      userName: 'Aditi Verma',
+      userAvatar: 'https://i.pravatar.cc/150?img=2',
+      content: 'Such a beautiful day 🌸',
+      timestamp: DateTime.now().subtract(const Duration(hours: 2)),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Coax"),
+        title: const Text("Coax Feed"),
         centerTitle: true,
         backgroundColor: Colors.redAccent,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.chat_bubble_outline),
-            onPressed: () {},
-          ),
-        ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Stories Row
-            Container(
-              height: 100,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 8, // dummy stories
-                itemBuilder: (context, index) {
-                  return Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.orangeAccent,
-                          child: Text(
-                            "U$index",
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text("User$index"),
-                      ],
-                    ),
-                  );
-                },
-              ),
+      body: ListView.builder(
+        itemCount: posts.length,
+        itemBuilder: (context, index) {
+          final post = posts[index];
+          return Card(
+            margin: const EdgeInsets.all(10),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
             ),
-            const Divider(),
-
-            // Dummy Posts Feed
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: 5, // dummy posts
-              itemBuilder: (context, index) {
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                      vertical: 10, horizontal: 12),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  elevation: 4,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      ListTile(
-                        leading: const CircleAvatar(
-                          backgroundColor: Colors.red,
-                          child: Icon(Icons.person, color: Colors.white),
-                        ),
-                        title: Text("User$index"),
-                        subtitle: const Text("2 hrs ago"),
-                        trailing: const Icon(Icons.more_vert),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(post.userAvatar),
                       ),
-                      Container(
-                        height: 200,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              "https://picsum.photos/400/300", // random dummy image
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                      const SizedBox(width: 10),
+                      Text(
+                        post.userName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Icon(Icons.favorite_border),
-                            Icon(Icons.comment_outlined),
-                            Icon(Icons.send_outlined),
-                          ],
-                        ),
+                      const Spacer(),
+                      Text(
+                        "${post.timestamp.hour}:${post.timestamp.minute.toString().padLeft(2, '0')}",
+                        style: const TextStyle(color: Colors.grey),
                       ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Text(
-                          "Liked by user123 and 120 others",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
                     ],
                   ),
-                );
-              },
+                  const SizedBox(height: 10),
+                  Text(post.content),
+                  if (post.imageUrl != null) ...[
+                    const SizedBox(height: 10),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(post.imageUrl!),
+                    ),
+                  ]
+                ],
+              ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
