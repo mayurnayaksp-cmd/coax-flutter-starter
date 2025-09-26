@@ -11,7 +11,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = const [
-    Center(child: Text("Feed Page", style: TextStyle(fontSize: 24))),
+    FeedPage(),,
     Center(child: Text("Search Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Upload Page", style: TextStyle(fontSize: 24))),
     Center(child: Text("Notifications Page", style: TextStyle(fontSize: 24))),
