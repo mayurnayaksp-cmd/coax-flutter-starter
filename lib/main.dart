@@ -1,28 +1,61 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const CoaxApp());
+  runApp(CoaxApp());
 }
 
 class CoaxApp extends StatelessWidget {
-  const CoaxApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Coax',
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Coax 🚀'),
-          backgroundColor: Colors.deepPurple,
+      title: 'Coax Flutter Starter',
+      theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      home: LikePage(),
+    );
+  }
+}
+
+class LikePage extends StatefulWidget {
+  @override
+  _LikePageState createState() => _LikePageState();
+}
+
+class _LikePageState extends State<LikePage> {
+  int likes = 0;
+
+  void increaseLikes() {
+    setState(() {
+      likes++;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Coax Demo"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Likes ❤️",
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(height: 10),
+            Text(
+              "$likes",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
-        body: const Center(
-          child: Text(
-            'Hello Coax!',
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-          ),
-        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: increaseLikes,
+        child: Icon(Icons.favorite),
       ),
     );
   }
