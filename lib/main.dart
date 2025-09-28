@@ -17,12 +17,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'COAX',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const AuthGate(),
-    );
-  }
-}
+  title: 'COAX',
+  theme: ThemeData(primarySwatch: Colors.blue),
+  home: const HomeScreen(), // Always show HomeScreen first
+  routes: {
+    '/login': (context) => LoginScreen(),
+    '/signup': (context) => SignUpScreen(),
+    '/home': (context) => HomeScreen(),
+  },
+);
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
