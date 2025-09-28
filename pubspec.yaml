@@ -1,36 +1,36 @@
-name: coax
-description: First social media app made in India 🚀
+name: coax_flutter_starter
+description: Building new India.
+publish_to: "none"
 
-publish_to: 'none' # remove if you want to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
+
+  # Firebase
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.0
+  cloud_firestore: ^5.4.4
+
+  # UI & Icons
   cupertino_icons: ^1.0.8
-  image_picker: ^1.0.4
-  provider: ^6.0.5
-  firebase_core: ^2.15.0
-  firebase_auth: ^4.7.2
-  cloud_firestore: ^4.8.5
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.3
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
 
   assets:
     - assets/images/
-flutter:
-  uses-material-design: true
-  assets:
-    - assets/images/
+
   fonts:
     - family: PirataOne
       fonts:
