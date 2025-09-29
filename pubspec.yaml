@@ -30,7 +30,6 @@ flutter:
 
   assets:
     - assets/images/
-    - assets/fonts/
 
   fonts:
     - family: PirataOne
