@@ -27,3 +27,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/fonts/
+
+  fonts:
+    - family: PirataOne
+      fonts:
+        - asset: assets/fonts/PirataOne-Regular.ttf
